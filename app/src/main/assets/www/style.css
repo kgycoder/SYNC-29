@@ -4161,3 +4161,8 @@ button, a, div, span, input {
 #np-fav svg path {
     transition: fill 0.2s ease, stroke 0.2s ease;
 }
+
+/* NP LS 왼쪽 컬럼 너비 CSS override 차단 — JS 인라인이 지배 */
+    #np-ls-left, #np-ls-right {
+        flex-shrink: 0 !important;
+    }
