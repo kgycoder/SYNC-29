@@ -1239,7 +1239,7 @@ function _buildLandscapeDOM() {
         'flex-direction:column',
         'align-items:center',
         'justify-content:center',
-        'width:46%',
+        'width:40%',
         'height:100%',
         'padding:20px 14px 20px 24px',
         'box-sizing:border-box',
@@ -1273,7 +1273,7 @@ function _buildLandscapeDOM() {
     const titleEl = document.createElement('div');
     titleEl.id = 'np-ls-title';
     titleEl.style.cssText = [
-        'font-size:13px',
+        'font-size:11px',
         'font-weight:700',
         'color:rgba(255,255,255,0.96)',
         'white-space:nowrap',
@@ -1285,7 +1285,7 @@ function _buildLandscapeDOM() {
     titleEl.textContent = S.track?.title || '—';
     const chEl = document.createElement('div');
     chEl.id = 'np-ls-ch';
-    chEl.style.cssText = 'font-size:11px;color:rgba(255,255,255,0.48);';
+    chEl.style.cssText = 'font-size:9.5px;color:rgba(255,255,255,0.48);';
     chEl.textContent = S.track?.channel || '—';
     meta.appendChild(titleEl);
     meta.appendChild(chEl);
@@ -1299,8 +1299,8 @@ function _buildLandscapeDOM() {
             <div id="np-ls-pf" style="height:100%;background:rgba(255,255,255,0.90);border-radius:10px;width:0%;pointer-events:none;transition:width 0.25s linear;"></div>
         </div>
         <div style="display:flex;justify-content:space-between;margin-top:6px;">
-            <span id="np-ls-cur" style="font-size:10px;color:rgba(255,255,255,0.38);font-family:'DM Mono',monospace;">0:00</span>
-            <span id="np-ls-tot" style="font-size:10px;color:rgba(255,255,255,0.38);font-family:'DM Mono',monospace;">0:00</span>
+            <span id="np-ls-cur" style="font-size:8.5px;color:rgba(255,255,255,0.38);font-family:'DM Mono',monospace;">0:00</span>
+            <span id="np-ls-tot" style="font-size:8.5px;color:rgba(255,255,255,0.38);font-family:'DM Mono',monospace;">0:00</span>
         </div>
     `;
     left.appendChild(prog);
@@ -1321,11 +1321,11 @@ function _buildLandscapeDOM() {
     // ── 오른쪽 컬럼: 가사 ──
     const right = document.createElement('div');
     right.id = 'np-ls-right';
-    right.style.cssText = [
+right.style.cssText = [
         'display:flex',
         'flex-direction:column',
         'justify-content:center',
-        'width:54%',
+        'width:60%',
         'height:100%',
         'padding:20px 28px 20px 12px',
         'box-sizing:border-box',
@@ -1380,7 +1380,7 @@ function _renderLsLyrics() {
     LY.lines.forEach((line, i) => {
         const el = document.createElement('div');
         el.style.cssText = [
-            'font-size:clamp(15px,2.0vw,22px)',
+            'font-size:clamp(16px,2.2vw,24px)',
             'font-weight:700',
             'line-height:1.55',
             'color:rgba(255,255,255,0.00)',
