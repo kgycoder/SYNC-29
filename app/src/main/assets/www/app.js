@@ -1241,7 +1241,7 @@ function _buildLandscapeDOM() {
         'justify-content:center',
         'width:46%',
         'height:100%',
-        'padding:40px 20px 40px 36px',
+        'padding:20px 14px 20px 24px',
         'box-sizing:border-box',
         'position:relative',
         'z-index:10',
@@ -1251,12 +1251,12 @@ function _buildLandscapeDOM() {
     // 앨범 아트
     const artShell = document.createElement('div');
     artShell.style.cssText = [
-        'width:min(260px,34vw)',
+        'width:min(190px,24vw)',
         'aspect-ratio:1',
-        'border-radius:18px',
+        'border-radius:14px',
         'overflow:hidden',
         'flex-shrink:0',
-        'box-shadow:0 40px 120px rgba(0,0,0,0.85)',
+        'box-shadow:0 24px 80px rgba(0,0,0,0.85)',
         'position:relative'
     ].join(';');
     const artImg = document.createElement('img');
@@ -1269,23 +1269,23 @@ function _buildLandscapeDOM() {
 
     // 곡명 + 아티스트
     const meta = document.createElement('div');
-    meta.style.cssText = 'width:100%;margin-top:16px;padding:0 4px;';
+    meta.style.cssText = 'width:100%;margin-top:10px;padding:0 4px;';
     const titleEl = document.createElement('div');
     titleEl.id = 'np-ls-title';
     titleEl.style.cssText = [
-        'font-size:17px',
+        'font-size:13px',
         'font-weight:700',
         'color:rgba(255,255,255,0.96)',
         'white-space:nowrap',
         'overflow:hidden',
         'text-overflow:ellipsis',
         'letter-spacing:-0.3px',
-        'margin-bottom:4px'
+        'margin-bottom:3px'
     ].join(';');
     titleEl.textContent = S.track?.title || '—';
     const chEl = document.createElement('div');
     chEl.id = 'np-ls-ch';
-    chEl.style.cssText = 'font-size:13px;color:rgba(255,255,255,0.48);';
+    chEl.style.cssText = 'font-size:11px;color:rgba(255,255,255,0.48);';
     chEl.textContent = S.track?.channel || '—';
     meta.appendChild(titleEl);
     meta.appendChild(chEl);
@@ -1293,7 +1293,7 @@ function _buildLandscapeDOM() {
 
     // 재생바
     const prog = document.createElement('div');
-    prog.style.cssText = 'width:100%;margin-top:14px;padding:0 4px;';
+    prog.style.cssText = 'width:100%;margin-top:8px;padding:0 4px;';
     prog.innerHTML = `
         <div id="np-ls-pb" style="height:3px;background:rgba(255,255,255,0.18);border-radius:10px;cursor:pointer;position:relative;">
             <div id="np-ls-pf" style="height:100%;background:rgba(255,255,255,0.90);border-radius:10px;width:0%;pointer-events:none;transition:width 0.25s linear;"></div>
@@ -1380,15 +1380,15 @@ function _renderLsLyrics() {
     LY.lines.forEach((line, i) => {
         const el = document.createElement('div');
         el.style.cssText = [
-            'font-size:clamp(17px,2.6vw,28px)',
+            'font-size:clamp(15px,2.0vw,22px)',
             'font-weight:700',
             'line-height:1.55',
-            'color:rgba(255,255,255,0.10)',
+            'color:rgba(255,255,255,0.00)',
             'padding:6px 0',
             'cursor:pointer',
             'word-break:keep-all',
             'overflow-wrap:break-word',
-            'transition:color 0.35s ease, font-size 0.35s ease, filter 0.35s ease',
+            'transition:color 0.35s ease, filter 0.35s ease',
             'will-change:color,filter',
             '-webkit-font-smoothing:antialiased'
         ].join(';');
@@ -1459,22 +1459,27 @@ function _highlightLsLine(idx) {
         if (d === 0) {
             el.style.color      = 'rgba(255,255,255,0.97)';
             el.style.fontWeight = '800';
-            el.style.fontSize   = 'clamp(20px,3.2vw,34px)';
-            el.style.filter     = 'drop-shadow(0 0 20px rgba(255,255,255,0.18))';
+            el.style.filter     = 'drop-shadow(0 0 16px rgba(255,255,255,0.16))';
         } else if (d === -1) {
             el.style.color      = 'rgba(255,255,255,0.52)';
             el.style.fontWeight = '700';
-            el.style.fontSize   = 'clamp(17px,2.6vw,28px)';
             el.style.filter     = 'none';
-        } else if (d >= 1 && d <= 3) {
-            el.style.color      = 'rgba(255,255,255,0.26)';
+        } else if (d === -2) {
+            el.style.color      = 'rgba(255,255,255,0.18)';
             el.style.fontWeight = '700';
-            el.style.fontSize   = 'clamp(17px,2.6vw,28px)';
+            el.style.filter     = 'none';
+        } else if (d === 1) {
+            el.style.color      = 'rgba(255,255,255,0.30)';
+            el.style.fontWeight = '700';
+            el.style.filter     = 'none';
+        } else if (d === 2) {
+            el.style.color      = 'rgba(255,255,255,0.14)';
+            el.style.fontWeight = '700';
             el.style.filter     = 'none';
         } else {
-            el.style.color      = 'rgba(255,255,255,0.10)';
-            el.style.fontWeight = '600';
-            el.style.fontSize   = 'clamp(15px,2.2vw,24px)';
+            /* 범위 밖 줄: 완전 투명 → 5줄 밖은 안 보임 */
+            el.style.color      = 'rgba(255,255,255,0.00)';
+            el.style.fontWeight = '700';
             el.style.filter     = 'none';
         }
     });
