@@ -738,6 +738,21 @@ function callCs(p) {
 function post(type, extra = {}) {
     try { window.AndroidBridge.postMessage(JSON.stringify({ type, ...extra })); } catch { }
 }
+// ── 미디어 세션 업데이트 (Android Service → 알림 + 잠금화면) ──
+function notifyMediaUpdate() {
+    if (!S.track) return;
+    try {
+        window.AndroidBridge.postMessage(JSON.stringify({
+            type:     'mediaUpdate',
+            title:    S.track.title  || '',
+            artist:   S.track.channel || '',
+            thumb:    getThumbMd(S.track.id),
+            playing:  S.playing,
+            position: S.cur || 0,
+            duration: S.dur || 0
+        }));
+    } catch(e) {}
+}
 
 /* ════════════════════════════════════════════
    STATE
@@ -807,6 +822,7 @@ function onYtSt(e) {
         document.getElementById('np-pulse').style.display = 'block';
         if (S.echo > 0) setEcho(S.echo);
         startBeatTimer((MOODS[_curMood] || MOODS.default).bpm);
+        notifyMediaUpdate(); // ← 추가
     } else if (e.data === P.PAUSED) {
         S.playing = false; BG.playing = false; updPlay(); stopTick(); stopBeatTimer();
         document.getElementById('vizz').classList.add('off');
@@ -814,6 +830,7 @@ function onYtSt(e) {
         document.getElementById('np-ash').classList.remove('playing');
         document.getElementById('np-pulse').style.display = 'none';
         clearInterval(_echoTimer);
+        notifyMediaUpdate(); // ← 추가
     } else if (e.data === P.ENDED) {
         clearInterval(_echoTimer); stopBeatTimer();
         if (S.repeat === 2) { S.ytPlayer.seekTo(0); S.ytPlayer.playVideo(); }
@@ -1136,6 +1153,7 @@ function startTick() {
             setT('p-cur', S.cur); setT('np-cur', S.cur);
             setT('p-tot', S.dur); setT('np-tot', S.dur);
             if (OV.active) { setT('ov-p-cur', S.cur); setT('ov-p-tot', S.dur); }
+            if (S.dur > 0 && Math.floor(S.cur) % 5 === 0) notifyMediaUpdate(); // ← 추가 (5초마다 위치 업데이트)
             const bpf = document.getElementById('bar-prog-fill');
             if (bpf) bpf.style.width = pct.toFixed(2) + '%';
         } catch { }
